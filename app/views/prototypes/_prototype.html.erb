@@ -1,10 +1,14 @@
 <div class="card">
-  <%= link_to image_tag("プロトタイプの画像", class: :card__img ), root_path%>
+  <%= link_to image_tag(prototype.image, class: :card__img ), prototype_path(prototype)%>
   <div class="card__body">
-    <%= link_to "プロトタイプのタイトル", root_path, class: :card__title%>
+    <%= link_to prototype.concept, root_path, class: :card__title%>
     <p class="card__summary">
-      <%= "プロトタイプのキャッチコピー" %>
+      <%= prototype.catch_copy %>
     </p>
-    <%= link_to "by プロトタイプの投稿者名", root_path, class: :card__user %>
+    <% if current_user %>
+      <%= link_to "#{current_user.name}",  "/users/#{current_user.id}", class: :card__user %>
+    <% else %>
+      <%= link_to "ログイン", new_user_session_path, class: :card__user %>
+    <% end %>
   </div>
 </div>
