@@ -2,7 +2,7 @@
   <div class="inner">
     <div class="prototype__wrapper">
       <p class="prototype__hedding">
-        <%= @prototype.title %>
+        <%= link_to @prototype.title, prototype_path(@prototype.id) %>
       </p>
       <%= link_to @prototype.user.name, "/users/#{current_user.id}", class: :prototype__user %>
         <% if user_signed_in? && current_user.id == @prototype.user_id %>
@@ -18,22 +18,22 @@
       </div>
       <div class="prototype__body">
         <div class="prototype__detail">
-          <p class="detail__title">キャッチコピー</p>
+          <p class="detail__title"><%="キャッチコピー" %></p>
           <p class="detail__message">
-            <%= "プロトタイプのキャッチコピー" %>
+            <%= link_to @prototype.catch_copy, root_path, class: :card__title%>
           </p>
         </div>
         <div class="prototype__detail">
-          <p class="detail__title">コンセプト</p>
+          <p class="detail__title"><%="コンセプト" %></p>
           <p class="detail__message">
-            <%= "プロトタイプのコンセプト" %>
+            <%= link_to @prototype.concept, root_path, class: :card__title%>
           </p>
         </div>
       </div>
       <div class="prototype__comments">
         <% if current_user %>
         <%# ログインしているユーザーには以下のコメント投稿フォームを表示する %>
-          <%= form_with model: [@prototype, @comment], local: true do |f|%>
+          <%= form_with model: [@prototype, @comment], local: true, url: prototype_comments_path(@prototype)  do |f|%>
             <div class="field">
               <%= f.label :text, "コメント" %><br />
               <%= f.text_field :text, id:"comment_content" %>
