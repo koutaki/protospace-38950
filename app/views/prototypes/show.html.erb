@@ -4,8 +4,8 @@
       <p class="prototype__hedding">
         <%= link_to @prototype.title, prototype_path(@prototype.id) %>
       </p>
-      <%= link_to @prototype.user.name, "/users/#{current_user.id}", class: :prototype__user %>
-        <% if user_signed_in? && current_user.id == @prototype.user_id %>
+      <%= link_to "by #{@prototype.user.name}", user_path(@prototype.user), class: :prototype__user %>
+        <% if current_user == @prototype.user %>
       <%# プロトタイプの投稿者とログインしているユーザーが同じであれば以下を表示する %>
           <div class="prototype__manage">
             <%= link_to "編集する", edit_prototype_path(@prototype.id), method: :get , class: :prototype__btn %>
@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="prototype__comments">
-        <% if current_user %>
+        <% if user_signed_in? %>
         <%# ログインしているユーザーには以下のコメント投稿フォームを表示する %>
           <%= form_with model: [@prototype, @comment], local: true, url: prototype_comments_path(@prototype)  do |f|%>
             <div class="field">
@@ -50,7 +50,7 @@
             <% @comments.each do |comment| %>
               <li class="comments_list">
                 <%= comment.text %>
-                <%= link_to comment.user.name, "/users/#{current_user.id}", class: :comment_user %>
+                <%= link_to comment.user.name, "/users/#{comment.user.id}", class: :comment_user %>
                 
               </li>
             <% end %>
